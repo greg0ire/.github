@@ -12,6 +12,11 @@ on:
         description: "The version the package being tested, in case of circular dependencies."
         required: false
         type: "string"
+      unstable-requirement:
+        description: "a requirement to test against e.g symfony/framework-bundle 6@dev"
+        type: string
+        default: ""
+        required: false
 
 env:
   fail-fast: true
@@ -56,6 +61,13 @@ jobs:
         run: |
           echo "COMPOSER_ROOT_VERSION=${{ inputs.composer-root-version }}" >> $GITHUB_ENV
         if: "${{ inputs.composer-root-version }}"
+
+      - name: "Add unstable requirement"
+        run: |
+          composer config minimum-stability dev
+          composer config prefer-stable true
+          composer require ${{ inputs.unstable-requirement }}
+        if: "${{ inputs.unstable-requirement != '' }}"
 
       - name: "Install dependencies with Composer"
         uses: "ramsey/composer-install@v1"
