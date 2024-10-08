@@ -10,7 +10,6 @@ on:
       - "composer.*"
       - "src/**" # but some packages use lib
       - "phpstan*"
-      - "psalm*"
       - "tests/**"
   push:
     branches:
@@ -20,7 +19,6 @@ on:
       - "composer.*"
       - "src/**" # but some packages use lib
       - "phpstan*"
-      - "psalm*"
       - "tests/**"
 
 jobs:
